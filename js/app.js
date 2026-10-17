@@ -8,6 +8,7 @@ import {
   renderPaises,
   actualizarContador,
 } from "./ui/ui.js";
+import { aplicarFiltros } from "./utils/filters.js";
 
 // ESTADO DE LA APLICACIÓN
 let paises = [];
@@ -16,11 +17,33 @@ let paises = [];
 const destinationContainer = document.querySelector("#destinations-container");
 const resultsCount = document.querySelector("#results-count");
 const initialMessage = document.querySelector("#initial-message");
+const searchInput = document.querySelector("#search-input");
+const continentFilter = document.querySelector("#continent-filter");
+const sortFilter = document.querySelector("#sort-filter");
+const searchForm = document.querySelector("#search-form");
+
+// ACTUALIZAR VISTA CON FILTROS
+function actualizarVista() {
+  const opciones = {
+    search: searchInput?.value || "",
+    continent: continentFilter?.value || "all",
+    sort: sortFilter?.value || "az",
+  };
+
+  const paisesFiltrados = aplicarFiltros(paises, opciones);
+
+  renderPaises(paisesFiltrados, destinationContainer);
+  actualizarContador(paisesFiltrados.length, resultsCount);
+}
 
 // INICIALIZACIÓN DE LA APLICACIÓN
 async function init() {
   console.log("Explorador de viajes iniciado");
   //resultsCount.textContent = '1 destino';
+
+  if (searchForm) {
+    searchForm.addEventListener("submit", (e) => e.preventDefault());
+  }
 
   // MOSTRAR RESULTADOS DE LA CARGA
   mostrarCargando(destinationContainer);
@@ -39,9 +62,12 @@ async function init() {
   }
 
   // RENDERIZAR DESTINOS
-  renderPaises(paises, destinationContainer);
+  actualizarVista();
 
-  actualizarContador(paises.length, resultsCount);
+  // ESCUCHADORES DE EVENTOS
+  searchInput?.addEventListener("input", actualizarVista);
+  continentFilter?.addEventListener("change", actualizarVista);
+  sortFilter?.addEventListener("change", actualizarVista);
 }
 
 // INICIAR APLICACIÓN
