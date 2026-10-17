@@ -259,3 +259,82 @@ export function renderPaises(paises, contenedor) {
 
   contenedor.innerHTML = tarjetas;
 }
+
+// VARIABLE PARA CONSERVAR LA INSTANCIA DEL MAPA LEAFLET
+let map = null;
+
+// RENDERIZAR DETALLE DEL PAÍS EN EL MODAL (v0.5.0)
+export function renderDetalleModal(pais, contenedorDetalle) {
+  const nombre = pais.names?.common ?? "Nombre no disponible";
+  const nombreOficial = pais.names?.official ?? "";
+  const region = pais.region ?? "Región no disponible";
+  const subregion = pais.subregion ?? "Subregión no disponible";
+  const capital = pais.capital?.[0] ?? "Capital no disponible";
+  const poblacion = pais.population
+    ? pais.population.toLocaleString("es-MX")
+    : "0";
+  const bandera = pais.flag?.url_png ?? "";
+
+  contenedorDetalle.innerHTML = /*html*/ `
+    <div class="text-center mb-6">
+      <img 
+        src="${bandera}" 
+        alt="Bandera de ${nombre}" 
+        class="w-32 h-20 object-cover mx-auto rounded shadow-sm border mb-3"
+      />
+      <h3 class="text-2xl font-bold text-slate-900">${nombre}</h3>
+      <p class="text-slate-500 text-sm">${nombreOficial}</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 text-sm bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4">
+      <div>
+        <p class="text-xs text-slate-500">Capital</p>
+        <p class="font-semibold text-slate-800">${capital}</p>
+      </div>
+      <div>
+        <p class="text-xs text-slate-500">Población</p>
+        <p class="font-semibold text-slate-800">${poblacion}</p>
+      </div>
+      <div>
+        <p class="text-xs text-slate-500">Región</p>
+        <p class="font-semibold text-slate-800">${region}</p>
+      </div>
+      <div>
+        <p class="text-xs text-slate-500">Subregión</p>
+        <p class="font-semibold text-slate-800">${subregion}</p>
+      </div>
+    </div>
+  `;
+}
+
+// INICIALIZAR Y ACTUALIZAR MAPA INTERACTIVO CON LEAFLET (v0.5.0)
+export function renderMapa(latlng, nombrePais, capitalPais) {
+  if (!latlng || latlng.length < 2) return;
+
+  const [lat, lng] = latlng;
+
+  // Si ya existe un mapa instanciado, se destruye para liberar el contenedor
+  if (map) {
+    map.remove();
+  }
+
+  // Crear mapa en el contenedor #map
+  map = L.map("map").setView([lat, lng], 5);
+
+  // Cargar capa OpenStreetMap
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  // Agregar marcador interactivo
+  L.marker([lat, lng])
+    .addTo(map)
+    .bindPopup(`<b>${nombrePais}</b><br>${capitalPais}`)
+    .openPopup();
+
+  // Reajustar dimensiones para evitar renders recortados en modales
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 200);
+}

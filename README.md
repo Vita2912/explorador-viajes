@@ -53,4 +53,4 @@ La aplicación utiliza una sola página HTML y divide progresivamente la lógica
 
 ## Versión actual
 
-v0.4.0 - Aplicar Filtros y criterios de busqueda.
+v0.5.0 - Detalle del destino, Mapa interactivo con Leaflet.

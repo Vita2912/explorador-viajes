@@ -14,6 +14,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- =========================================
+         LEAFLET MAPS CSS & JS (v0.5.0)
+    ========================================== -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   </head>
 
   <body class="bg-slate-50 text-slate-800 min-h-screen">
@@ -217,6 +226,34 @@
         </div>
       </section>
     </main>
+
+    <!-- =========================================
+         MODAL DE DETALLE DEL DESTINO (v0.5.0)
+    ========================================== -->
+
+    <div
+      id="modal-detail"
+      class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative p-6"
+      >
+        <!-- BOTÓN DE CERRAR -->
+        <button
+          id="btn-close-modal"
+          type="button"
+          class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 transition cursor-pointer"
+        >
+          ✕
+        </button>
+
+        <!-- CONTENIDO DINÁMICO DE LA INFORMACIÓN DEL PAÍS -->
+        <div id="modal-content"></div>
+
+        <!-- CONTENEDOR DEL MAPA CON LEAFLET -->
+        <div id="map" class="h-64 w-full rounded-xl mt-4 z-0"></div>
+      </div>
+    </div>
 
     <!-- =========================================
          JAVASCRIPT
