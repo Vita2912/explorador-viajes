@@ -33,4 +33,4 @@ La aplicación utiliza una sola página HTML y divide progresivamente la lógica
 
 ## Versión actual
 
-v0.1.0 - Estructura inicial, Tailwind CSS y configuración del proyecto.
+v0.2.0 - Estructura inicial, Tailwind CSS y configuración del proyecto y integrar API REST Countries
