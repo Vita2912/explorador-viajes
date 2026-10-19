@@ -1,56 +1,39 @@
 <!doctype html>
-
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Explorador de Viajes</title>
 
-    <!-- =========================================
-         TAILWIND CSS
-    ========================================== -->
-
+    <!-- TAILWIND CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-    <!-- =========================================
-         LEAFLET MAPS CSS & JS (v0.5.0)
-    ========================================== -->
+    <!-- LEAFLET MAPS CSS & JS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- SWEETALERT2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body class="bg-slate-50 text-slate-800 min-h-screen">
-    <!-- =========================================
-         HEADER
-    ========================================== -->
-
+    <!-- HEADER -->
     <header class="bg-white border-b border-slate-200 shadow-sm">
       <div
         class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
-        <!-- =====================================
-                 LOGOTIPO / TÍTULO
-            ====================================== -->
-
         <div>
           <h1 class="text-2xl font-bold text-blue-600">
             🌎 Explorador de Viajes
           </h1>
-
           <p class="text-sm text-slate-500">
             Descubre destinos alrededor del mundo
           </p>
         </div>
-
-        <!-- =====================================
-                 NAVEGACIÓN
-            ====================================== -->
 
         <nav class="flex gap-2">
           <button
@@ -60,7 +43,6 @@
           >
             Explorar
           </button>
-
           <button
             id="btn-favoritos"
             type="button"
@@ -72,30 +54,19 @@
       </div>
     </header>
 
-    <!-- =========================================
-         CONTENIDO PRINCIPAL
-    ========================================== -->
-
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="max-w-7xl mx-auto px-6 py-10">
-      <!-- =========================================
-             PRESENTACIÓN
-        ========================================== -->
-
       <section class="mb-10">
         <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
           Descubre tu próximo destino
         </h2>
-
         <p class="text-slate-500 max-w-2xl">
           Explora países de todo el mundo, consulta información relevante y
           guarda tus destinos favoritos.
         </p>
       </section>
 
-      <!-- =========================================
-             BUSCADOR Y FILTROS
-        ========================================== -->
-
+      <!-- BUSCADOR Y FILTROS -->
       <section
         class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-10"
       >
@@ -103,10 +74,6 @@
           id="search-form"
           class="grid grid-cols-1 md:grid-cols-4 gap-5 items-end"
         >
-          <!-- =====================================
-                     BUSCADOR
-                ====================================== -->
-
           <div class="md:col-span-2">
             <label
               for="search-input"
@@ -114,7 +81,6 @@
             >
               Buscar destino
             </label>
-
             <input
               type="text"
               id="search-input"
@@ -123,10 +89,6 @@
             />
           </div>
 
-          <!-- =====================================
-                     FILTRO POR CONTINENTE
-                ====================================== -->
-
           <div>
             <label
               for="continent-filter"
@@ -134,28 +96,18 @@
             >
               Continente
             </label>
-
             <select
               id="continent-filter"
               class="w-full px-4 py-3 border border-slate-300 rounded-lg bg-white outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">Todos</option>
-
               <option value="Africa">África</option>
-
               <option value="Americas">América</option>
-
               <option value="Asia">Asia</option>
-
               <option value="Europe">Europa</option>
-
               <option value="Oceania">Oceanía</option>
             </select>
           </div>
-
-          <!-- =====================================
-                     ORDENAMIENTO
-                ====================================== -->
 
           <div>
             <label
@@ -164,60 +116,40 @@
             >
               Ordenar
             </label>
-
             <select
               id="sort-filter"
               class="w-full px-4 py-3 border border-slate-300 rounded-lg bg-white outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="az">Nombre A-Z</option>
-
               <option value="za">Nombre Z-A</option>
             </select>
           </div>
         </form>
       </section>
 
-      <!-- =========================================
-             DESTINOS
-        ========================================== -->
-
+      <!-- DESTINOS -->
       <section>
-        <!-- =====================================
-                 ENCABEZADO DE RESULTADOS
-            ====================================== -->
-
         <div class="flex items-center justify-between mb-6">
           <h2 id="section-title" class="text-2xl font-bold text-slate-900">
             Destinos
           </h2>
-
           <span id="results-count" class="text-sm text-slate-500">
             0 destinos
           </span>
         </div>
 
-        <!-- =========================================
-                 CONTENEDOR DINÁMICO DE DESTINOS
-            ========================================== -->
-
         <div
           id="destinations-container"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          <!-- =====================================
-                     ESTADO INICIAL
-                ====================================== -->
-
           <div
             id="initial-message"
             class="col-span-full bg-white border border-dashed border-slate-300 rounded-xl p-12 text-center"
           >
             <div class="text-5xl mb-4">✈️</div>
-
             <h3 class="text-xl font-semibold text-slate-800 mb-2">
               Preparando destinos
             </h3>
-
             <p class="text-slate-500">
               Los destinos aparecerán aquí cuando conectemos nuestra aplicación
               con la API.
@@ -227,10 +159,7 @@
       </section>
     </main>
 
-    <!-- =========================================
-         MODAL DE DETALLE DEL DESTINO (v0.5.0)
-    ========================================== -->
-
+    <!-- MODAL DE DETALLE DEL DESTINO -->
     <div
       id="modal-detail"
       class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"
@@ -238,7 +167,6 @@
       <div
         class="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative p-6"
       >
-        <!-- BOTÓN DE CERRAR -->
         <button
           id="btn-close-modal"
           type="button"
@@ -247,18 +175,12 @@
           ✕
         </button>
 
-        <!-- CONTENIDO DINÁMICO DE LA INFORMACIÓN DEL PAÍS -->
         <div id="modal-content"></div>
-
-        <!-- CONTENEDOR DEL MAPA CON LEAFLET -->
         <div id="map" class="h-64 w-full rounded-xl mt-4 z-0"></div>
       </div>
     </div>
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
-
+    <!-- JAVASCRIPT -->
     <script type="module" src="./js/app.js"></script>
   </body>
 </html>
